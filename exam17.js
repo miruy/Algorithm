@@ -9,13 +9,16 @@ function solution(n, lost, reserve) {
 
     realLost.forEach(lostStudent => {
 
-        // 체육복을 빌려줄 수 있는 만큼 최대한 빌려주고 남은 학생 수가 1보다 작거나 같을 떼 남은 그 학생의 번호
+        // findIndex() : 괄혼 안 조건문을 만족하는 결과의 첫번째 요소 인덱스 -> forEach문에서 사용하였으므로 반복해서 조건문 만족하는 결과의 요소를 가져올
+        // reserveStudent : 여벌을 가지고온 학생의 번호, lostStudent : 체육복 잃어버린 학생 번호
+        // 여벌을 가지고온 학생의 번호 - 체육복 잃어버린 학생 번호 : 두 학생의 번호 차이
+        // 두 학생의 번호 차이가 1보다 작거나 같다 == 바로 앞뒤에 있는 학생 == 체육복을 빌려줄 수 있음
         const index = realReserve.findIndex(reserveStudent => Math.abs(reserveStudent - lostStudent) <= 1);
 
-        if (index !== -1) {
-            realReserve.splice(index, 1); // 여벌 체육복 있는 학생에서 제거하여, 다른 학생에게 빌려줄 수 없게 함
-        } else {
-            n -= 1; // 체육복을 빌리지 못한 경우, 수업에 참여할 수 있는 학생 수 감소
+        if (index !== -1) { // -1이 아니다 == 조건문을 만족하는 요소가 있다면 -> 체육복을 빌릴 수 있음
+            realReserve.splice(index, 1); // 체육복을 빌려주었으니 여벌 체육복 있는 학생수 한명 제거
+        } else { // 조건문을 만족하는 요소가 없다면 -> 체육복을 못 빌림
+            n -= 1; // 수업에 참여할 수 있는 학생 수 감소
         }
     });
 
